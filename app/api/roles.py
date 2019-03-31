@@ -1,5 +1,5 @@
 #coding=utf8
-from app.role import role
+from app.api import role
 
 @role.route('q',methods=['GET','POST'])
 def q():

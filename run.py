@@ -1,8 +1,8 @@
 #coding=utf8
 from flask import Flask
-from app.user import user
-from app.role import role
-from app.func import func
+from app.api import user
+from app.api import role
+from app.api import func
 app =Flask(__name__)
 
 app.register_blueprint(user,url_prefix='/user')
