@@ -16,7 +16,7 @@ conn = pymysql.connect(host='gz-cdb-kx9p12uu.sql.tencentcdb.com', user='dbig', p
 def fetchData(sql):
     cur = conn.cursor(cursor=pymysql.cursors.DictCursor) 
     # 查询
-    sql = "select t.*,s.* from test t left join t_sys_function s on t.id=s.id"
+    #sql = "select t.*,s.* from test t left join t_sys_function s on t.id=s.id"
     reCount = cur.execute(sql)  
     # 返回受影响的行数
     print(reCount)

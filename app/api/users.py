@@ -4,6 +4,7 @@ from flask import jsonify,request,Response
 from functools import wraps
 import json
 from app.mysqldb import read
+from app.utils import resdto
 
 # 登录限制的装饰器
 def login_required(func):
@@ -19,24 +20,14 @@ def login_required(func):
 @user.route('/q',methods=['GET','POST'])
 @login_required
 def q():
-	return json.dumps({
-    "ret": 0,
-    "msg": "OK",
-    "errorcode": 0,
-    "data": {
-        "xAxis": {
-          "data": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-        },
-        "series": {
-          "data": [10, 52, 200, 334, 390, 330, 220]
-        }
-    }
-	})
+    return resdto.falseReturn({},"1")
 #折线
 @user.route('/q1',methods=['GET','POST'])
 def q1():
-	return read.fetchData("select table_name from information_schema.tables where table_schema='fsttour'and table_type='base table';")
+    data = json.loads(read.fetchData("select table_name from information_schema.tables where table_schema='fsttour'and table_type='base table';"))
+    return jsonify(resdto.trueReturn(data,"ss"))
 #折线
 @user.route('/q2',methods=['GET','POST'])
 def q2():
-	return jsonify({'user':'name'})
+    data = json.loads(read.fetchData("select * from bi_complain_total_mon"))
+    return jsonify(resdto.trueReturn(data,"ss"))
