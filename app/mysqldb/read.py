@@ -2,6 +2,7 @@
 import pymysql
 import json
 import datetime
+from DBUtils.PooledDB import PooledDB
 
 class Encoder(json.JSONEncoder):
     def default(self, obj):
@@ -11,9 +12,9 @@ class Encoder(json.JSONEncoder):
             return obj.strftime("%Y-%m-%d")
         else:
             return json.JSONEncoder.default(self, obj)
-conn = pymysql.connect(host='gz-cdb-kx9p12uu.sql.tencentcdb.com', user='dbig', passwd='Lovelock2017', db='fsttour',port=63312)
 
 def fetchData(sql):
+    conn = pool.connection()  #以后每次需要数据库连接就是用connection（）函数获取连接就好了
     cur = conn.cursor(cursor=pymysql.cursors.DictCursor) 
     # 查询
     #sql = "select t.*,s.* from test t left join t_sys_function s on t.id=s.id"
@@ -26,6 +27,7 @@ def fetchData(sql):
     cur.close()
     conn.close()
 def commitData(sql):
+    conn = pool.connection()  #以后每次需要数据库连接就是用connection（）函数获取连接就好了
     cur = conn.cursor()
     try:
 		# 执行sql语句
